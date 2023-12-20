@@ -30,6 +30,13 @@ const userschema=mongoose.Schema({
               message: 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one digit'
             }
           },
+
+          orders: [
+            {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'Order',
+            },
+          ],
         
          token:{type:String}
 })

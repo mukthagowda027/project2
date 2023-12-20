@@ -11,7 +11,8 @@ const sendresetpasswordemail=async(name,email,resetToken)=>{
             auth:{
                 user:process.env.email,
                 pass:process.env.password
-            }
+            },
+            debug: true,
          })
 
     

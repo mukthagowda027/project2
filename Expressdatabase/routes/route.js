@@ -1,14 +1,14 @@
 const express=require('express');
-const router=express.Router();
-const bodyparser=require('body-parser');
-const formidable=require('express-formidable')
+const formidable=require('express-formidable');
 const bcrypt=require('bcrypt');
-const jwt=require('jsonwebtoken')
-const nodemailer=require('nodemailer')
-const randomstring=require('randomstring')
+const jwt=require('jsonwebtoken');
+const nodemailer=require('nodemailer');
+const randomstring=require('randomstring');
+
+const router=express.Router();
 
 let sendresetpasswordemail=require("../mailfunctionality/mail.js")
-let User=require('../models/model.js')
+let User=require('../models/userschema.js')
 
 router.post('/register',formidable(),async function(req,res)
 {
@@ -77,7 +77,10 @@ router.post("/forgot-password",formidable(),async function(req,res)
         {
             const resetToken=randomstring.generate()
             user.resetToken = resetToken;
-            await sendresetpasswordemail(user.name,user.email,resetToken)
+            console.log("Before sending reset email");
+            await sendresetpasswordemail(user.name, user.email, resetToken);
+            console.log("After sending reset email");
+
             res.status(200).send({msg:"please check your inbox of mail and reset password"})
         }
         else{
@@ -90,13 +93,5 @@ router.post("/forgot-password",formidable(),async function(req,res)
     
 
 });
-        
-
-      
-    
-
-    
-    
-
 
 module.exports=router;
