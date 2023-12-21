@@ -12,8 +12,8 @@ let User=require('../models/userschema.js')
 
 router.post('/register',formidable(),async function(req,res)
 {
-    let {email,password}=req.fields;
-    if(!(email && password))
+    let {username,email,password}=req.fields;
+    if(!(username && email && password))
     {
         res.status(400).send("provide all inputs")
     }
@@ -27,6 +27,7 @@ router.post('/register',formidable(),async function(req,res)
             let enc_password = await bcrypt.hash(password, 10)
             
             let user=await User.create({
+                username:username,
                 email:email,
                 password:enc_password
             })

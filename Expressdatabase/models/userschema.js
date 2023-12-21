@@ -7,6 +7,7 @@ mongoose.connect(mongouri)
 .catch(()=>{console.log("Error in connection")})
 
 const userschema=mongoose.Schema({
+  username:{type:String},
     email:{type: String,
            unique: true,
            validate: {
@@ -37,6 +38,8 @@ const userschema=mongoose.Schema({
               ref: 'Order',
             },
           ],
+          role: { type: String, default: 'customer' }, 
+          vendorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' } ,
         
          token:{type:String}
 })
