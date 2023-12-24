@@ -20,6 +20,9 @@ const productSchema = new mongoose.Schema({
     required: true,
     enum: ['Electronics', 'Clothing', 'Books', 'Other'], 
   },
+  subcategory:{
+    type:String,
+  },
   brand: String,
   color: String,
   size: String,
@@ -38,6 +41,8 @@ const productSchema = new mongoose.Schema({
       ref: 'Order',
     },
   ],
+  vendorId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' } 
+
 });
 
 const Product = mongoose.model('Product', productSchema);

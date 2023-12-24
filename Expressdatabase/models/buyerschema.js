@@ -6,12 +6,6 @@ const buyerSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  orders: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order',
-    },
-  ],
   address: {
     street: String,
     city: String,

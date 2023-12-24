@@ -40,6 +40,8 @@ const userschema=mongoose.Schema({
           ],
           role: { type: String, default: 'customer' }, 
           vendorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' } ,
+          cartId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' } ,
+          buyerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Buyer' } ,
         
          token:{type:String}
 })

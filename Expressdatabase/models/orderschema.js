@@ -6,19 +6,7 @@ const orderSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  products: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  items:[],
   totalAmount: {
     type: Number,
     required: true,
@@ -27,6 +15,18 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  address:{
+    type:String
+  },
+  statusofproduct:{
+    type:String
+  },
+  paymentMode:{
+    type:String
+  },
+  deliveryDate:{
+    type:Date
+  }
 });
 
 const Order = mongoose.model('Order', orderSchema);

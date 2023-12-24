@@ -8,7 +8,8 @@ const randomstring=require('randomstring');
 const router=express.Router();
 
 let sendresetpasswordemail=require("../mailfunctionality/mail.js")
-let User=require('../models/userschema.js')
+let User=require('../models/userschema.js');
+const { route } = require('./vendorroute.js');
 
 router.post('/register',formidable(),async function(req,res)
 {
@@ -70,19 +71,18 @@ router.post("/forgot-password",formidable(),async function(req,res)
 {
     let {email}=req.fields;
     
-    
     try {
         const user = await User.findOne({ email });
     
         if (user) 
         {
             const resetToken=randomstring.generate()
-            user.resetToken = resetToken;
+            await User.findByIdAndUpdate(user, { $set: {resetToken:resetToken} });
             console.log("Before sending reset email");
-            await sendresetpasswordemail(user.name, user.email, resetToken);
+            await sendresetpasswordemail(user.username, user.email, resetToken);
             console.log("After sending reset email");
 
-            res.status(200).send({msg:"please check your inbox of mail and reset password"})
+            res.status(200).send({msg:"please check your inbox of mail and reset password"});
         }
         else{
             return res.status(404).send("user not found")
@@ -91,8 +91,27 @@ router.post("/forgot-password",formidable(),async function(req,res)
         {
             res.status(200).send({msg:error.message})
         }
-    
-
 });
+
+router.get("/reset-password/:token",formidable(),async function(req,res){
+   try{
+        const token=req.query.token;
+        const tokenData=await User.findOne({token});
+        if(tokenData)
+        {
+            const password=req.fields.password;
+            const newpassword=await bcrypt.hash(password, 10);
+            const userData=await User.findByIdAndUpdate({_id:tokenData._id},{$set:{password:newpassword}},{new:true})
+            res.status(200).send({msg:"user password has been reset",data:userData})
+        }
+        else
+        {
+            res.status(200).send({msg:"This link has been expired"})
+        }
+   }
+   catch{
+
+   }
+})
 
 module.exports=router;

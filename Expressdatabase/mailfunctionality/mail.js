@@ -1,6 +1,6 @@
 const nodemailer=require('nodemailer')
 
-const sendresetpasswordemail=async(name,email,resetToken)=>{
+const sendresetpasswordemail=(name,email,resetToken)=>{
 
     try{
          const transporter=nodemailer.createTransport({
@@ -10,25 +10,24 @@ const sendresetpasswordemail=async(name,email,resetToken)=>{
             requireTLS:true,
             auth:{
                 user:process.env.email,
-                pass:process.env.password
+                pass:process.env.password,
             },
-            debug: true,
          })
 
     
-
          const mailOptions={
-            from:process.env.mail,
+            from:process.env.email,
             to:email,
-            subject:"For reset Password",
+            subject:"For reseting the Password",
             html: `
-            <p> ${name} You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
-            <p>Please click on the following link, or paste this into your browser to complete the process:</p>
-            <a href="http://localhost:3000/reset-password/${resetToken}">Reset Password</a>
+            <p> ${name} you are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
+            <p>Please click on the following link to complete the process:</p>
+            <a href="http://localhost:3000/user/reset-password/${resetToken}">Reset Password</a>
+            or copy paste "http://localhost:3000/user/reset-password/${resetToken}"
             <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
           `
          }
-         await transporter.sendMail(mailOptions,function(error,info){
+         transporter.sendMail(mailOptions,function(error,info){
             if(error)
             {
                 console.log(error)
@@ -45,5 +44,7 @@ const sendresetpasswordemail=async(name,email,resetToken)=>{
     }
 
 }
+
+
 
 module.exports=sendresetpasswordemail;
