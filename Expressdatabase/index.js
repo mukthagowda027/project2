@@ -10,6 +10,7 @@ const orderRoutes=require('./routes/orderroute')
 const vendorroute=require('./routes/vendorroute')
 const cartroute=require('./routes/cartroute')
 const buyerroute=require('./routes/buyerroute')
+const staffroute=require('./routes/staffroute')
 
 app.use("/user",routes);
 app.use("/products",productsroutes);
@@ -17,7 +18,7 @@ app.use('/orders', orderRoutes);
 app.use('/vendors',vendorroute)
 app.use('/cart',cartroute)
 app.use('/buyer',buyerroute)
-
+app.use('/staff',staffroute)
 
 
 app.listen(port,()=>{

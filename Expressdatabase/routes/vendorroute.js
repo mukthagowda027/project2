@@ -9,7 +9,7 @@ const User=require('../models/userschema');
 router.post('/create',formidable(), async (req, res) => {
   try {
     const { user,companyName,description,contactInfo,socialMedia } = req.fields;
-    const existingVendor = await Vendor.findOne({ user });
+    const existingVendor = await Vendor.findOne({ user: user._id });
 
     if (existingVendor) {
       return res.json('Vendor already exists for this user')
@@ -51,8 +51,6 @@ router.get('/vendor/:vendorId', async (req, res) => {
     if (!vendor) {
       return res.status(404).json({ error: 'Vendor not found' });
     }
-
-    await vendor.populate('products').execPopulate();
 
     res.json(vendor.products);
 

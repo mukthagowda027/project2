@@ -96,7 +96,7 @@ router.post("/forgot-password",formidable(),async function(req,res)
 router.get("/reset-password/:token",formidable(),async function(req,res){
    try{
         const token=req.query.token;
-        const tokenData=await User.findOne({token});
+        const tokenData=await User.findOne({resetToken});
         if(tokenData)
         {
             const password=req.fields.password;

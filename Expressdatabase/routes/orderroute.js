@@ -11,6 +11,7 @@ const Buyer = require('../models/buyerschema');
 router.post('/placeorder',formidable(), async (req, res) => {
 
   try {
+
     const {userId} = req.fields;
 
     const user = await User.findById(userId);
@@ -46,9 +47,6 @@ router.post('/placeorder',formidable(), async (req, res) => {
     price: product.price,
   });
 }
-
-console.log('orderItems:', orderItems);
-
 
   const totalBillAmount = orderItems.reduce((total, item) => {
     return total + item.price * item.quantity;

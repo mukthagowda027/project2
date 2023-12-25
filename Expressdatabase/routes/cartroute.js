@@ -15,7 +15,6 @@ router.post('/add-to-cart', formidable(), async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-
     let cart = await Cart.findOne({ user });
 
     if (!cart) {
@@ -67,9 +66,9 @@ router.post('/add-to-cart', formidable(), async (req, res) => {
 
 router.get('/get-cart/:userId', formidable(), async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const userId = req.params.userId;
 
-    const cart = await Cart.findOne({ user: userId }).populate('items.product', 'name price');
+    const cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
       return res.status(404).json({ error: 'Cart not found' });
@@ -83,7 +82,7 @@ router.get('/get-cart/:userId', formidable(), async (req, res) => {
 
 router.get('/carttotal/:userId', formidable(), async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const userId = req.params.userId;
 
     const cart = await Cart.findOne({ user: userId });
 
