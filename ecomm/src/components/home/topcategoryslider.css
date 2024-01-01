@@ -1,0 +1,39 @@
+.image-slider {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .image-container {
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .prev {
+    left: 10px;
+  }
+  
+  .next {
+    right: 10px;
+  }
+
+  button :hover{
+    color: lightblue;
+  }
+  

@@ -1,0 +1,32 @@
+.card-slider {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .card {
+    width: 100%; 
+    box-sizing: border-box;
+    margin-right: 15px; 
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 24px;
+    color: #000;
+  }
+  
+  .next {
+    right: 0;
+  }
+  

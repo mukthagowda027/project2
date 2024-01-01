@@ -84,6 +84,11 @@ router.get('/carttotal/:userId', formidable(), async (req, res) => {
   try {
     const userId = req.params.userId;
 
+    if (!userId) {
+      return res.status(400).json({ error: 'Invalid userId' });
+    }
+
+
     const cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
@@ -122,6 +127,37 @@ router.get('/carttotal/:userId', formidable(), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/remove-from-cart', formidable(), async (req, res) => {
+  try {
+    const { userId, productId } = req.fields;
+
+    if (!userId || !productId) {
+      return res.status(400).json({ error: 'Invalid userId or productId' });
+    }
+
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found' });
+    }
+
+    const updatedItems = cart.items.filter(item => !item.product.equals(productId));
+
+    cart.items = updatedItems;
+
+    await cart.save();
+
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+module.exports = router;
+
 
 
 module.exports = router;

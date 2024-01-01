@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express=require('express');
-
+const cors=require('cors')
 const app=express();
 const port=process.env.APIPORT;
 
@@ -11,6 +11,8 @@ const vendorroute=require('./routes/vendorroute')
 const cartroute=require('./routes/cartroute')
 const buyerroute=require('./routes/buyerroute')
 const staffroute=require('./routes/staffroute')
+
+app.use(cors());
 
 app.use("/user",routes);
 app.use("/products",productsroutes);

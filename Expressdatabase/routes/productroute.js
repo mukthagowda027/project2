@@ -32,11 +32,11 @@ router.get('/getproducts',async function(req, res){
   });
   
 
-router.post('/addproducts', upload.single('imageUrl'),async function(req, res){
+router.post('/addproducts',formidable(),async function(req, res){
 try{
 
-        let{name,description,price,category,brand,color,size,inventory,createdAt,vendorId}=req.body;
-        const imageUrl = req.file.filename;
+        let{name,description,price,category,brand,color,size,inventory,createdAt,vendorId,imageUrl}=req.fields;
+      
 
         const vendor = await Vendor.findById(vendorId);
         if (!vendor) {
@@ -76,20 +76,23 @@ try{
     }
   });
   
-  router.get('/getproducts', async function(req, res) {
-
+  router.get('/getproducts2/:productId', formidable(), async function(req, res) {
     try {
-      const { category } = req.query;
+      const { productId } = req.params;
+      console.log('Received productId:', productId);
+      const product = await Product.findOne({ _id: productId });
       
-      const query = category ? { category } : {};
-      const products = await Product.find(query);
-      res.json(products);
-
-    } 
-    catch (error) {
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      res.json(product);
+    } catch (error) {
       res.status(500).json({ message: error.message });
     }
   });
+  
+  
   
 
 module.exports=router;

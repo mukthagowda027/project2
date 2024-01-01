@@ -13,7 +13,11 @@ const { route } = require('./vendorroute.js');
 
 router.post('/register',formidable(),async function(req,res)
 {
-    let {username,email,password}=req.fields;
+    const { fields } = req;
+    console.log('req.fields:', req.fields);
+
+
+    let {username,email,password}=fields;
     if(!(username && email && password))
     {
         res.status(400).send("provide all inputs")
@@ -69,6 +73,8 @@ router.post('/login', formidable(), async function (req, res){
 
 router.post("/forgot-password",formidable(),async function(req,res)
 {
+    console.log(req); 
+    console.log(req.fields); 
     let {email}=req.fields;
     
     try {
@@ -78,10 +84,7 @@ router.post("/forgot-password",formidable(),async function(req,res)
         {
             const resetToken=randomstring.generate()
             await User.findByIdAndUpdate(user, { $set: {resetToken:resetToken} });
-            console.log("Before sending reset email");
             await sendresetpasswordemail(user.username, user.email, resetToken);
-            console.log("After sending reset email");
-
             res.status(200).send({msg:"please check your inbox of mail and reset password"});
         }
         else{
@@ -93,9 +96,9 @@ router.post("/forgot-password",formidable(),async function(req,res)
         }
 });
 
-router.get("/reset-password/:token",formidable(),async function(req,res){
+router.post("/reset-password/:token",formidable(),async function(req,res){
    try{
-        const token=req.query.token;
+    const resetToken = req.params.token;
         const tokenData=await User.findOne({resetToken});
         if(tokenData)
         {

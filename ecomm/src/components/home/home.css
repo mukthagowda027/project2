@@ -1,0 +1,51 @@
+.vertical-menu {
+    width: 260px;
+    border:1px solid lightgray;
+  }
+  
+  .vertical-menu a {
+    background-color: white;
+    color: black;
+    display: block;
+    padding: 7px;
+    text-decoration: none;
+  }
+  
+  .vertical-menu a:hover {
+    background-color:white;
+    color: lightblue;
+    text-decoration: underline;
+  }
+  
+  .vertical-menu a.active {
+    background-color:#FFD801;
+    color: white;
+  }
+
+  .custom-carousel-indicators {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .custom-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .custom-indicator.active {
+    background-color: #333;
+  }
+  
+  .dropdown-content {
+  display: none;
+  transition: display 0.3s ease-in-out;
+}
+
+.dropdown-content.show {
+  display: block;
+}
